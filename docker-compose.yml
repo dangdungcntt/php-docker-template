@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+
+  app:
+    build:
+      context: ./
+      dockerfile: Docker/app.dockerfile
+    
+  web:
+    build:
+      context: ./
+      dockerfile: Docker/web.dockerfile
+    networks:
+      - default
+      - proxy_network
+
+networks:
+  proxy_network:
+    external: true
