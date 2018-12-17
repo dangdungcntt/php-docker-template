@@ -1,27 +1,25 @@
-version: '2'
+version: '3.7'
 
 services:
 
   app:
-    image: dangdungcntt/php-laravel:latest
-    volumes:
-      - ./www:/var/www
+    build:
+      context: ./
+      dockerfile: Docker/app.dockerfile
     
   web:
-    image: nginx:latest
-    volumes:
-      - ./vhost.conf:/etc/nginx/conf.d/default.conf
-    volumes_from:
-      - app:rw
+    build:
+      context: ./
+      dockerfile: Docker/web.dockerfile
     ports:
-      - 8880:80
+      - 127.0.0.1:8880:80
   
   database:
     image: mariadb:latest
     volumes:
       - dbdata:/var/lib/mysql
     ports:
-      - 3366:3306
+      - 127.0.0.1:3366:3306
     environment:
       - "MYSQL_DATABASE=mariadb"
       - "MYSQL_USER=mariadb"
